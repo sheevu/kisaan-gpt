@@ -1,0 +1,102 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Kisaan AI Saathi</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #f4f4f4;
+            margin: 0;
+            padding: 20px;
+        }
+        h1, h2 {
+            color: #333;
+        }
+        form {
+            margin-bottom: 20px;
+            background: #fff;
+            padding: 15px;
+            border-radius: 5px;
+            box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+        }
+        input[type="text"] {
+            width: calc(100% - 22px);
+            padding: 10px;
+            margin-right: 10px;
+            border: 1px solid #ccc;
+            border-radius: 4px;
+        }
+        button {
+            padding: 10px 15px;
+            background-color: #28a745;
+            color: white;
+            border: none;
+            border-radius: 4px;
+            cursor: pointer;
+        }
+        button:hover {
+            background-color: #218838;
+        }
+        #weather-result, #crop-advisory-result, #market-price-result {
+            margin-top: 10px;
+            background: #e9ecef;
+            padding: 10px;
+            border-radius: 5px;
+        }
+    </style>
+</head>
+<body>
+    <h1>Kisaan AI Saathi</h1>
+    <p>Your AI-powered farmer assistant tool.</p>
+
+    <h2>Weather Updates</h2>
+    <form id="weather-form">
+        <input type="text" id="weather-location" placeholder="Enter location" required>
+        <button type="submit">Get Weather</button>
+    </form>
+    <div id="weather-result"></div>
+
+    <h2>Crop Advisory</h2>
+    <form id="crop-advisory-form">
+        <input type="text" id="crop-name" placeholder="Enter crop name" required>
+        <button type="submit">Get Advisory</button>
+    </form>
+    <div id="crop-advisory-result"></div>
+
+    <h2>Market Price Predictions</h2>
+    <form id="market-price-form">
+        <input type="text" id="market-crop" placeholder="Enter crop name" required>
+        <button type="submit">Get Market Price</button>
+    </form>
+    <div id="market-price-result"></div>
+
+    <script>
+        document.getElementById('weather-form').onsubmit = async (e) => {
+            e.preventDefault();
+            const location = document.getElementById('weather-location').value;
+            const response = await fetch(`/weather?location=${location}`);
+            const data = await response.json();
+            document.getElementById('weather-result').innerText = JSON.stringify(data);
+        };
+
+        document.getElementById('crop-advisory-form').onsubmit = async (e) => {
+            e.preventDefault();
+            const crop = document.getElementById('crop-name').value;
+            const response = await fetch(`/crop-advisory?crop=${crop}`);
+            const data = await response.json();
+            document.getElementById('crop-advisory-result').innerText = JSON.stringify(data);
+        };
+
+        document.getElementById('market-price-form').onsubmit = async (e) => {
+            e.preventDefault();
+            const crop = document.getElementById('market-crop').value;
+            const response = await fetch(`/market-price?crop=${crop}`);
+            const data = await response.json();
+            document.getElementById('market-price-result').innerText = JSON.stringify(data);
+        };
+    </script>
+</body>
+</html>
